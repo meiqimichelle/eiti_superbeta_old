@@ -1,0 +1,19 @@
+/*============================================
+main
+============================================*/
+.section {
+    overflow: hidden;
+    padding: 20px 20px 80px 20px;
+    &.top {
+    background-image:url(../img/oil_blur.jpg);
+    height: 550px;
+        & h1 {
+        background-color: $primary-color;
+        color: $white;
+        margin-top: 100px;
+        }
+    }
+    &.putty {
+    background-color: $putty;
+    }
+}

@@ -33,6 +33,63 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<link rel="stylesheet" href="css/gumby.css">
+    
+    <!-- CartoDB API dependencies -->
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+    
+    <style>
+      #layer_selector {
+        position: relative;
+        top: 20px;
+        right: 20px;
+        padding: 0;
+      }
+
+      #layer_selector ul {
+        padding: 0; margin: 0;
+        list-style-type: none;
+      }
+
+      #layer_selector li {
+        border-bottom: 1px solid #999;
+        padding: 15px 30px;
+        font-family: "Helvetica", Arial;
+        font-size: 13px;
+        color: #444;
+        cursor: auto;
+      }
+
+      #layer_selector li:hover {
+        background-color: #F0F0F0;
+        cursor: pointer;
+      }
+
+      #layer_selector li.selected {
+        background-color: #EEE;
+      }
+    </style>
+    
+    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
+    <![endif]-->
+    <!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <script>
+        // create google map
+    var map;
+    var mapOptions = {
+      zoom: 7,
+      center: new google.maps.LatLng(43, -68),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('map'),  mapOptions);
+    var layerUrl = 'http://onrrbeta.cartodb.com/api/v2/viz/d5dc5672-43e8-11e3-9b15-09e0e2302f71/viz.json';
+    cartodb.createLayer(map, layerUrl).addTo(map)
+        
+    </script>-->
+    
+    
 	<script src="js/libs/modernizr-2.6.2.min.js"></script>
 </head>
 
@@ -62,10 +119,94 @@
                 <div class="twelve columns">
                     <h1>Want the data for your very own?<br />
                         Filter and download in bulk here.</h1>
-                    <div class="">
+                    <div class="buttons">
+                      <button type="button" value="Ia" class="first">Ia</button>
+                      <button type="button" value="Ib">Ib</button>
+                      <button class="selected" autofocus type="button" value="2003">2003</button>
+                      <button type="button" value="IV">IV</button>
+                      <button type="button" value="VI" class="last">VI</button>
                     </div>
+                    
+                    <div id="map" style="height:600px;">
+                        <div id="layer_selector" class="cartodb-infobox">
+                          <ul>
+                            <li data="2003" class="selected">2003</li>
+                            <li data="2004">2004</li>
+                            <li data="2005">2005</li>
+                            <li data="2006">2006</li>
+                          </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- include google maps library *before* load cartodb.js -->
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.uncompressed.js"></script>
+
+    <script>
+        // create layer selector
+      function createSelector(layer) {
+        var sql = new cartodb.SQL({ user: 'onrrbeta' });
+
+        var $options = $('#layer_selector li');
+        $options.click(function(e) {
+          // get the year of the selected layer
+          var $li = $(e.target);
+          var year = $li.attr('data');
+
+          // deselect all and select the clicked one
+          $options.removeClass('selected');
+          $li.addClass('selected');
+
+          // create query based on data from the layer
+          var query = "select * from fy03_thru_fy12_disbursement";
+
+          if(area !== 'all') {
+            query = "select * from fy03_thru_fy12_disbursement where fiscal_year = " + year;
+          }
+
+          // change the query in the layer to update the map
+          layer.setQuery(query);
+        });
+      }
+        
+        
+      function main() {
+        cartodb.createVis('map', 'http://onrrbeta.cartodb.com/api/v2/viz/be6b1e10-4019-11e3-a8e6-f7ffb1ea9484/viz.json', {
+            shareable: true,
+            title: true,
+            description: true,
+            search: true,
+            tiles_loader: true,
+            center_lat: 38.27312,
+            center_lon: -98.5821872,
+            zoom: 3
+        })
+        .done(function(vis, layers) {
+            createSelector(layers[1]);
+          // layer 0 is the base layer, layer 1 is cartodb layer
+          // setInteraction is disabled by default
+          layers[1].setInteraction(true);
+          layers[1].on('featureOver', function(e, pos, latlng, data) {
+            cartodb.log.log(e, pos, latlng, data);
+          });
+            
+          map = vis.getNativeMap();
+        })
+        .error(function(err) {
+          console.log(err);
+        });
+
+      }
+
+      window.onload = main;
+    </script>
+                    
+                    <!--<canvas id="myChart" width="400" height="400"></canvas>-->
                 </div>
+                
             </div>
+            <!--<iframe width='100%' height='600' frameborder='0' src='http://onrrbeta.cartodb.com/viz/d5dc5672-43e8-11e3-9b15-09e0e2302f71/embed_map?title=false&description=true&search=false&shareable=false&cartodb_logo=true&layer_selector=true&legends=true&scrollwheel=true&sublayer_options=1&sql=&zoom=2&center_lat=39.977120098439634&center_lon=-96.45996093749999'></iframe>-->
         </div>
     </div>
 
@@ -98,6 +239,83 @@
 	}
 	}
 	</script>
+    
+    <!--
+    attempt to use cartodb and google maps api 
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing"></script>
+    
+    <script>
+
+  var overlay, cartodb_imagemaptype,
+  map   = null,
+  user  = "onrrbeta",
+  table = "fy03_thru_fy12_disbursement",
+  cat   = '2003',
+  zoom  = 8,
+  lat   = 38.27312,
+  lng   = -98.5821872;
+
+  var resetLayer = function() {
+    // Add the cartodb tiles
+    map.overlayMapTypes.insertAt(0, new google.maps.ImageMapType(cartoDBLayer));
+    map.overlayMapTypes.pop(1);
+  }
+
+  var cartoDBLayer = {
+    getTileUrl: function(coord, zoom) {
+      var sql   = "SELECT * FROM fy03_thru_fy12_disbursement where fiscal_year = '" + cat + "'";
+      return "https://"+user+".cartodb.com/tiles/"+table+"/"+zoom+"/"+coord.x+"/"+coord.y+".png?sql=" + sql;
+    },
+    tileSize: new google.maps.Size(256, 256)
+  };
+
+  $(function() {
+
+    // Define the basic map options
+    var cartodbMapOptions = {
+      zoom: zoom,
+      center: new google.maps.LatLng( lat, lng ),
+      disableDefaultUI: true,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    // Init the map
+    map = new google.maps.Map(document.getElementById("map"), cartodbMapOptions);
+
+    var mapStyle = [{
+      stylers: [{ saturation: -65 }, { gamma: 1.52 }] }, {
+      featureType: "administrative", stylers: [{ saturation: -95 }, { gamma: 2.26 }] }, {
+      featureType: "water", elementType: "labels", stylers: [{ visibility: "off" }] }, {
+      featureType: "administrative.locality", stylers: [{ visibility: 'off' }] }, {
+      featureType: "road", stylers: [{ visibility: "simplified" }, { saturation: -99 }, { gamma: 2.22 }] }, {
+      featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] }, {
+      featureType: "road.arterial", stylers: [{ visibility: 'off' }] }, {
+      featureType: "road.local", elementType: "labels", stylers: [{ visibility: 'off' }] }, {
+      featureType: "transit", stylers: [{ visibility: 'off' }] }, {
+      featureType: "road", elementType: "labels", stylers: [{ visibility: 'off' }] }, {
+      featureType: "poi", stylers: [{ saturation: -55 }]
+    }];
+
+    // Set the map style
+    map.setOptions({ styles: mapStyle });
+
+    // Add the CartoDB tiles
+    map.overlayMapTypes.insertAt(0, new google.maps.ImageMapType(cartoDBLayer));
+
+    // Bind the buttons
+    $('.buttons button').click(function(){
+      $(this).focus();
+      cat = $(this).val();
+
+      $(this).closest('div').find('button.selected').removeClass('selected');
+      $(this).addClass('selected');
+
+      resetLayer();
+    });
+
+  });
+
+</script>-->
 
 	<!--
 	Include gumby.js followed by UI modules followed by gumby.init.js
@@ -113,6 +331,35 @@
 	<script src="js/libs/ui/gumby.navbar.js"></script>
 	<script src="js/libs/ui/jquery.validation.js"></script>
 	<script src="js/libs/gumby.init.js"></script>
+    
+    <!--
+    Chart.js -->
+    <script src="js/libs/Chart.min.js"></script>
+   <!-- <script>
+        //Get the context of the canvas element we want to select
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myNewChart = new Chart(ctx).Line(data);
+        new Chart(ctx).Line(data,options);
+        var data = {
+	labels : ["January","February","March","April","May","June","July"],
+	datasets : [
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+			pointStrokeColor : "#fff",
+			data : [65,59,90,81,56,55,40]
+		},
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			pointColor : "rgba(151,187,205,1)",
+			pointStrokeColor : "#fff",
+			data : [28,48,40,19,96,27,100]
+		}
+	]
+}
+    </script> -->
 
 	<!--
 	gumby.min.js contains gumby.js, all UI modules and gumby.init.js

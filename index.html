@@ -39,9 +39,7 @@
     
     <style>
       #layer_selector {
-        position: relative;
-        top: 20px;
-        right: 20px;
+        margin: 160px 0 0 20px;
         padding: 0;
       }
 
@@ -52,7 +50,7 @@
 
       #layer_selector li {
         border-bottom: 1px solid #999;
-        padding: 15px 30px;
+        padding: 7px 25px;
         font-family: "Helvetica", Arial;
         font-size: 13px;
         color: #444;
@@ -134,6 +132,12 @@
                             <li data="2004">2004</li>
                             <li data="2005">2005</li>
                             <li data="2006">2006</li>
+                            <li data="2007">2007</li>
+                            <li data="2008">2008</li>
+                            <li data="2009">2009</li>
+                            <li data="2010">2010</li>
+                            <li data="2011">2011</li>
+                            <li data="2012">2012</li>
                           </ul>
                         </div>
                     </div>
@@ -159,11 +163,7 @@
           $li.addClass('selected');
 
           // create query based on data from the layer
-          var query = "select * from fy03_thru_fy12_disbursement";
-
-          if(area !== 'all') {
-            query = "select * from fy03_thru_fy12_disbursement where fiscal_year = " + year;
-          }
+          var query = "select * fy03_thru_fy12_disbursement_states_nogeo = " + year;
 
           // change the query in the layer to update the map
           layer.setQuery(query);
@@ -172,11 +172,11 @@
         
         
       function main() {
-        cartodb.createVis('map', 'http://onrrbeta.cartodb.com/api/v2/viz/be6b1e10-4019-11e3-a8e6-f7ffb1ea9484/viz.json', {
+        cartodb.createVis('map', 'http://onrrbeta.cartodb.com/api/v2/viz/95406af4-44ec-11e3-9f93-47e85a33d736/viz.json', {
             shareable: true,
-            title: true,
-            description: true,
-            search: true,
+            title: false,
+            description: false,
+            search: false,
             tiles_loader: true,
             center_lat: 38.27312,
             center_lon: -98.5821872,

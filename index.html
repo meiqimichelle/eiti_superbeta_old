@@ -65,6 +65,10 @@
       #layer_selector li.selected {
         background-color: #EEE;
       }
+        div.cartodb-popup div.cartodb-popup-content-wrapper {
+            width: inherit;
+max-width: inherit;
+        }
     </style>
     
     
@@ -115,15 +119,7 @@
         <div class="section putty">
             <div class="row">
                 <div class="twelve columns">
-                    <h1>Want the data for your very own?<br />
-                        Filter and download in bulk here.</h1>
-                    <div class="buttons">
-                      <button type="button" value="Ia" class="first">Ia</button>
-                      <button type="button" value="Ib">Ib</button>
-                      <button class="selected" autofocus type="button" value="2003">2003</button>
-                      <button type="button" value="IV">IV</button>
-                      <button type="button" value="VI" class="last">VI</button>
-                    </div>
+                    <h1>How much money did states earn from their oil and gas sales?</h1>
                     
                     <div id="map" style="height:600px;">
                         <div id="layer_selector" class="cartodb-infobox">
@@ -150,10 +146,12 @@
     <script>
         // create layer selector
       function createSelector(layer) {
+          
         var sql = new cartodb.SQL({ user: 'onrrbeta' });
 
         var $options = $('#layer_selector li');
         $options.click(function(e) {
+        console.log("i'm inside!!!");
           // get the year of the selected layer
           var $li = $(e.target);
           var year = $li.attr('data');
@@ -169,11 +167,11 @@
           layer.setQuery(query);
         });
       }
-        
+    
         
       function main() {
         cartodb.createVis('map', 'http://onrrbeta.cartodb.com/api/v2/viz/95406af4-44ec-11e3-9f93-47e85a33d736/viz.json', {
-            shareable: true,
+            shareable: false,
             title: false,
             description: false,
             search: false,

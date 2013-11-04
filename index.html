@@ -67,7 +67,7 @@
       }
         div.cartodb-popup div.cartodb-popup-content-wrapper {
             width: inherit;
-max-width: inherit;
+            max-width: inherit;
         }
     </style>
     
@@ -141,17 +141,15 @@ max-width: inherit;
                     <!-- include google maps library *before* load cartodb.js -->
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <!-- include cartodb.js library -->
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.uncompressed.js"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
 
     <script>
         // create layer selector
       function createSelector(layer) {
-          
         var sql = new cartodb.SQL({ user: 'onrrbeta' });
 
         var $options = $('#layer_selector li');
         $options.click(function(e) {
-        console.log("i'm inside!!!");
           // get the year of the selected layer
           var $li = $(e.target);
           var year = $li.attr('data');
@@ -161,8 +159,24 @@ max-width: inherit;
           $li.addClass('selected');
 
           // create query based on data from the layer
-          var query = "select * fy03_thru_fy12_disbursement_states_nogeo = " + year;
+//          var query = "select fy0312.*, gz.the_geom from fy03_thru_fy12_disbursement_states_nogeo fy0312 "
+//          + " JOIN gz_2010_us_040_00_5m gz ON fy0312.state = gz.name "
+//          + " where fy0312.fiscal_year = '" + year + "'";
 
+            var query = "SELECT fy0312.county,"
+            + "fy0312.disbursement,"
+            + "fy0312.disbursement_type,"
+            + "fy0312.fiscal_year,"
+            + "fy0312.state,"
+            + "fy0312.cartodb_id,"
+            + "gz.the_geom,"
+            + "gz.the_geom_webmercator"
+            + " FROM fy03_thru_fy12_disbursement_states_nogeo fy0312, gz_2010_us_040_00_5m gz"
+            + " WHERE fy0312.state = gz.name"
+            + " AND fy0312.fiscal_year = '" + year + "'"
+            
+//            console.log('query = ' + query);
+            
           // change the query in the layer to update the map
           layer.setQuery(query);
         });

@@ -1,0 +1,329 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en" itemscope itemtype="http://schema.org/Product"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+
+	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+			 More info: h5bp.com/b/378 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Prototype USEITI Report and Site</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="humans.txt">
+
+	<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+
+	<!-- Facebook Metadata /-->
+	<meta property="fb:page_id" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:description" content=""/>
+	<meta property="og:title" content=""/>
+
+	<!-- Google+ Metadata /-->
+	<meta itemprop="name" content="">
+	<meta itemprop="description" content="">
+	<meta itemprop="image" content="">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<link rel="stylesheet" href="css/gumby.css">
+    
+    <!-- CartoDB API dependencies -->
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+    
+    <style>
+      #layer_selector {
+        margin: 120px 0 0 20px;
+        padding: 0;
+      }
+
+        #layer_selector h1 {
+        font-size: 1em;
+      }
+
+        
+      #layer_selector ul {
+        padding: 0; margin: 0;
+        list-style-type: none;
+      }
+
+      #layer_selector li {
+        border-bottom: 1px solid #999;
+        padding: 7px 25px;
+        font-family: "Helvetica", Arial;
+        font-size: 13px;
+        color: #444;
+        cursor: auto;
+      }
+
+      #layer_selector li:hover {
+        background-color: #F0F0F0;
+        cursor: pointer;
+      }
+
+      #layer_selector li.selected {
+        background-color: #6ab5c3;
+      }
+        div.cartodb-popup div.cartodb-popup-content-wrapper {
+            width: inherit;
+            max-width: inherit;
+        }
+    </style>
+    
+    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
+    <![endif]-->
+    <!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <script>
+        // create google map
+    var map;
+    var mapOptions = {
+      zoom: 7,
+      center: new google.maps.LatLng(43, -68),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('map'),  mapOptions);
+    var layerUrl = 'http://onrrbeta.cartodb.com/api/v2/viz/d5dc5672-43e8-11e3-9b15-09e0e2302f71/viz.json';
+    cartodb.createLayer(map, layerUrl).addTo(map)
+        
+    </script>-->
+    
+    
+	<script src="js/libs/modernizr-2.6.2.min.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+    
+    <nav class="nav sticker" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
+    <div class="row">
+        <ul class="twelve columns">
+                <li><a href="#" itemprop="url"><div itemprop="name">Home</div></a></li>
+                <li><a href="#" itemprop="url"><div itemprop="name">Analysis</div></a></li>
+                <li><a href="#" itemprop="url"><div itemprop="name">Download Data</div></a></li>
+                <li><a href="#" itemprop="url"><div itemprop="name">For Developers</div></a></li>
+        </ul>
+    </div>
+    </nav>
+
+    <div id="main" role="main" itemscope itemprop="mainContentOfPage">
+        <div class="section top">
+            <div class="row">
+                <div class="twelve columns">
+                    <h1>Data and information on the extractive sector in the U.S.</h1>
+                </div>
+            </div>
+        </div>
+        <div class="section putty">
+            <div class="row">
+                <div class="twelve columns">
+                    <h1>How much money did states earn from their oil and gas sales?</h1>
+                    
+                    <div id="map" style="height:600px;">
+                        <div id="layer_selector" class="cartodb-infobox">
+                            <h1>Fiscal Year</h1>
+                          <ul>
+                            <li data="2003" class="selected">2003</li>
+                            <li data="2004">2004</li>
+                            <li data="2005">2005</li>
+                            <li data="2006">2006</li>
+                            <li data="2007">2007</li>
+                            <li data="2008">2008</li>
+                            <li data="2009">2009</li>
+                            <li data="2010">2010</li>
+                            <li data="2011">2011</li>
+                            <li data="2012">2012</li>
+                          </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- include google maps library *before* load cartodb.js -->
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+
+    <script>
+        // create layer selector
+      function createSelector(layer) {
+        var sql = new cartodb.SQL({ user: 'onrrbeta' });
+
+        var $options = $('#layer_selector li');
+        $options.click(function(e) {
+          // get the year of the selected layer
+          var $li = $(e.target);
+          var year = $li.attr('data');
+
+          // deselect all and select the clicked one
+          $options.removeClass('selected');
+          $li.addClass('selected');
+
+          // create query based on data from the layer
+//          var query = "select fy0312.*, gz.the_geom from fy03_thru_fy12_disbursement_states_nogeo fy0312 "
+//          + " JOIN gz_2010_us_040_00_5m gz ON fy0312.state = gz.name "
+//          + " where fy0312.fiscal_year = '" + year + "'";
+
+            var query = "SELECT fy0312.county,"
+            + "fy0312.disbursement,"
+            + "fy0312.disbursement_type,"
+            + "fy0312.fiscal_year,"
+            + "fy0312.state,"
+            + "fy0312.cartodb_id,"
+            + "gz.the_geom,"
+            + "gz.the_geom_webmercator"
+            + " FROM fy03_thru_fy12_disbursement_states_nogeo fy0312, gz_2010_us_040_00_5m gz"
+            + " WHERE fy0312.state = gz.name"
+            + " AND fy0312.fiscal_year = '" + year + "'"
+            
+//            console.log('query = ' + query);
+            
+          // change the query in the layer to update the map
+          layer.setQuery(query);
+        });
+      }
+    
+        
+      function main() {
+        cartodb.createVis('map', 'http://onrrbeta.cartodb.com/api/v2/viz/95406af4-44ec-11e3-9f93-47e85a33d736/viz.json', {
+            shareable: false,
+            title: false,
+            description: false,
+            search: false,
+            tiles_loader: true,
+            center_lat: 43.27312,
+            center_lon: -98.5821872,
+            zoom: 4
+        })
+        .done(function(vis, layers) {
+            createSelector(layers[1]);
+          // layer 0 is the base layer, layer 1 is cartodb layer
+          // setInteraction is disabled by default
+          layers[1].setInteraction(true);
+          layers[1].on('featureOver', function(e, pos, latlng, data) {
+            cartodb.log.log(e, pos, latlng, data);
+          });
+            
+          map = vis.getNativeMap();
+        })
+        .error(function(err) {
+          console.log(err);
+        });
+
+      }
+
+      window.onload = main;
+    </script>
+                    
+                    <!--<canvas id="myChart" width="400" height="400"></canvas>-->
+                </div>
+                
+            </div>
+            <!--<iframe width='100%' height='600' frameborder='0' src='http://onrrbeta.cartodb.com/viz/d5dc5672-43e8-11e3-9b15-09e0e2302f71/embed_map?title=false&description=true&search=false&shareable=false&cartodb_logo=true&layer_selector=true&legends=true&scrollwheel=true&sublayer_options=1&sql=&zoom=2&center_lat=39.977120098439634&center_lon=-96.45996093749999'></iframe>-->
+        </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <footer class="container" role="contentinfo" itemscope itemtype="http://schema.org/WPFooter">
+      </footer>
+    </div>
+    
+    
+    
+    
+    
+
+	<!-- Grab Google CDN's jQuery, fall back to local if offline -->
+	<!-- 2.0 for modern browsers, 1.10 for .oldie -->
+	<script>
+	var oldieCheck = Boolean(document.getElementsByTagName('html')[0].className.match(/\soldie\s/g));
+	if(!oldieCheck) {
+	document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"><\/script>');
+	} else {
+	document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
+	}
+	</script>
+	<script>
+	if(!window.jQuery) {
+	if(!oldieCheck) {
+	  document.write('<script src="js/libs/jquery-2.0.2.min.js"><\/script>');
+	} else {
+	  document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
+	}
+	}
+	</script>
+    
+  
+
+	<!--
+	Include gumby.js followed by UI modules followed by gumby.init.js
+	Or concatenate and minify into a single file -->
+	<script gumby-touch="js/libs" src="js/libs/gumby.js"></script>
+	<script src="js/libs/ui/gumby.retina.js"></script>
+	<script src="js/libs/ui/gumby.fixed.js"></script>
+	<script src="js/libs/ui/gumby.skiplink.js"></script>
+	<script src="js/libs/ui/gumby.toggleswitch.js"></script>
+	<script src="js/libs/ui/gumby.checkbox.js"></script>
+	<script src="js/libs/ui/gumby.radiobtn.js"></script>
+	<script src="js/libs/ui/gumby.tabs.js"></script>
+	<script src="js/libs/ui/gumby.navbar.js"></script>
+	<script src="js/libs/ui/jquery.validation.js"></script>
+	<script src="js/libs/gumby.init.js"></script>
+    
+    <!--
+    Chart.js -->
+    <script src="js/libs/Chart.min.js"></script>
+   <!-- <script>
+        //Get the context of the canvas element we want to select
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myNewChart = new Chart(ctx).Line(data);
+        new Chart(ctx).Line(data,options);
+        var data = {
+	labels : ["January","February","March","April","May","June","July"],
+	datasets : [
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+			pointStrokeColor : "#fff",
+			data : [65,59,90,81,56,55,40]
+		},
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			pointColor : "rgba(151,187,205,1)",
+			pointStrokeColor : "#fff",
+			data : [28,48,40,19,96,27,100]
+		}
+	]
+}
+    </script> -->
+
+	<!--
+	gumby.min.js contains gumby.js, all UI modules and gumby.init.js
+	<script src="js/libs/gumby.min.js"></script> -->
+	<script src="js/plugins.js"></script>
+	<script src="js/main.js"></script>
+
+	<!-- Change UA-XXXXX-X to be your site's ID -->
+	<!--<script>
+	window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+	Modernizr.load({
+	  load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+	});
+	</script>-->
+
+	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+	   chromium.org/developers/how-tos/chrome-frame-getting-started -->
+	<!--[if lt IE 7 ]>
+	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+	<script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+	<![endif]-->
+
+  </body>
+</html>

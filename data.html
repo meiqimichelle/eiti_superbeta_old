@@ -102,30 +102,78 @@
 
 <body itemscope itemtype="http://schema.org/WebPage">
     
-    <nav class="nav sticker" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
-    <div class="row">
-        <ul class="twelve columns">
-                <li><a href="#" itemprop="url"><div itemprop="name">Home</div></a></li>
-                <li><a href="#" itemprop="url"><div itemprop="name">Analysis</div></a></li>
-                <li><a href="#" itemprop="url"><div itemprop="name">Download Data</div></a></li>
-                <li><a href="#" itemprop="url"><div itemprop="name">For Developers</div></a></li>
-        </ul>
-    </div>
+   <nav class="fixNav animate" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
+      <div class="fixNavWrapper">
+        <div class="row logo">
+            <div class="six columns">
+              <img src="img/useiti_logo.jpg" alt="USEITI logo">
+              <p>Your source for information on <br/>mineral extraction on public lands.</p>
+            </div>
+            <div class="four columns search">
+            </div>
+          </div>
+        <div class="row nav">
+            <ul class="push_six six columns">
+                    <li class="three columns what"><a href="/index.html" itemprop="url"><div itemprop="name">What</div></a></li>
+                    <li class="three columns how"><a href="#" itemprop="url"><div itemprop="name">How</div></a></li>
+                    <li class="three columns data active"><a href="/data.html" itemprop="url"><div itemprop="name">Data</div></a></li>
+                    <li class="three columns reports"><a href="#" itemprop="url"><div itemprop="name">Reports</div></a></li>
+            </ul>
+          </div>
+      </div>
     </nav>
 
     <div id="main" role="main" itemscope itemprop="mainContentOfPage">
-        <div class="section top">
+        <div class="section top dataInfo">
             <div class="row">
                 <div class="twelve columns">
                     <h1>Data and information on the extractive sector in the U.S.</h1>
                 </div>
             </div>
         </div>
-        <div class="section putty">
+      
+      <div class="section dataBlock">
+          <div class="row">
+            <div class="four columns">
+              <div class="circle graph">
+                <a href="/data.html">
+                  <h2>Facts &#38; Figures</h2>
+                  <img src="img/graph.svg" alt="graph">
+                </a>
+              </div>
+            </div>
+            <div class="four columns">
+              <div class="circle">
+                <a href="#">
+                  <h2>Extractive Industries in <br/>the U.S.</h2>
+                  <img src="img/oil.svg" alt="oil rig">
+                </a>
+              </div>
+            </div>
+            <div class="four columns">
+              <div class="circle">
+                <a href="#">
+                  <h2>The U.S. Extractive Legal Framework</h2>
+                  <img src="img/book.svg" alt="book">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      
+      <div class="section blue">
+            <div class="row">
+              <div class="twelve columns title">
+                <h1>Information on the U.S. extractive industry. <br/>Get your data here!</h1>
+              </div>
+            </div>
+        </div>
+        
+        <div class="section">
             <div class="row">
                 <div class="twelve columns">
                     <h1>How much money did states earn from their oil and gas sales?</h1>
-                    
                     <div id="map" style="height:600px;">
                         <div id="layer_selector" class="cartodb-infobox">
                             <h1>Fiscal Year</h1>
@@ -142,8 +190,37 @@
                             <li data="2012">2012</li>
                           </ul>
                         </div>
-                    </div>
-                    
+                    </div> 
+                </div>
+            </div>
+        </div>
+      
+      <div class="section putty">
+        <div class="row">
+          <div class="twelve columns title dataInfo">
+              <h1>Want the data for your very own? <br/>Filter and download here.</h1>
+            
+            <div id="images"></div>
+            
+          </div>
+          <div class="twelve columns">
+            <p>Stuff here.</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  
+  <!--<iframe width='100%' height='600' frameborder='0' src='http://onrrbeta.cartodb.com/viz/d5dc5672-43e8-11e3-9b15-09e0e2302f71/embed_map?title=false&description=true&search=false&shareable=false&cartodb_logo=true&layer_selector=true&legends=true&scrollwheel=true&sublayer_options=1&sql=&zoom=2&center_lat=39.977120098439634&center_lon=-96.45996093749999'></iframe>-->
+  
+  <!--<canvas id="myChart" width="400" height="400"></canvas>-->
+
+    <div class="footer-wrapper">
+      <footer class="container" role="contentinfo" itemscope itemtype="http://schema.org/WPFooter">
+      </footer>
+    </div>
+    
+    
                     <!-- include google maps library *before* load cartodb.js -->
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <!-- include cartodb.js library -->
@@ -219,22 +296,6 @@
 
       window.onload = main;
     </script>
-                    
-                    <!--<canvas id="myChart" width="400" height="400"></canvas>-->
-                </div>
-                
-            </div>
-            <!--<iframe width='100%' height='600' frameborder='0' src='http://onrrbeta.cartodb.com/viz/d5dc5672-43e8-11e3-9b15-09e0e2302f71/embed_map?title=false&description=true&search=false&shareable=false&cartodb_logo=true&layer_selector=true&legends=true&scrollwheel=true&sublayer_options=1&sql=&zoom=2&center_lat=39.977120098439634&center_lon=-96.45996093749999'></iframe>-->
-        </div>
-    </div>
-
-    <div class="footer-wrapper">
-      <footer class="container" role="contentinfo" itemscope itemtype="http://schema.org/WPFooter">
-      </footer>
-    </div>
-    
-    
-    
     
     
 
@@ -309,6 +370,12 @@
 	<script src="js/libs/gumby.min.js"></script> -->
 	<script src="js/plugins.js"></script>
 	<script src="js/main.js"></script>
+  
+    <script src="js/classie.js"></script>
+    <script src="js/animateOnScroll.js"></script>
+  
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>  
+    <script src="js/getFlickr.js"></script>
 
 	<!-- Change UA-XXXXX-X to be your site's ID -->
 	<!--<script>

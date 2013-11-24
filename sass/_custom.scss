@@ -318,3 +318,36 @@ main
 .orange {
   color: $orange;
 }
+
+/*============================================
+data and information
+============================================*/
+
+.section {
+    overflow: hidden;
+    &.top {
+    padding: 20px 20px 80px 20px;
+    background-image:url(../img/oil_blur.jpg);
+    height: 550px;
+    margin-top: 230px;
+    color: $white;
+    &.dataInfo{
+        h1 {
+        font-size: 2.16em;
+        line-height: 1em;
+        font-weight:700;
+        background-color: $blue;
+        padding-left: 20px;
+        margin-top: 70px;
+        color: $white;
+        }
+    }
+    }
+    .title.dataInfo {
+    padding-top: 30px;
+    padding-bottom: 20px;
+      h1 {
+      color: $black;
+      }
+    }
+}

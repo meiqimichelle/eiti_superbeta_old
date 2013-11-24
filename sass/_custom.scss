@@ -13,6 +13,7 @@ nav
   left: 0;
   width: 100%;
   background: $white;
+  border-bottom: 2px solid $black;
   z-index: 10000;
   height: 230px;
   padding-top: 50px;
@@ -54,7 +55,7 @@ nav
   transition: all 0.3s; 
   }
   .nav {
-  top: -35px;
+  top: -41px;
   }
 }
 
@@ -70,7 +71,7 @@ nav
 
 .nav {
   position: relative;
-  top: -15px;
+  top: -19px;
   ul {
     margin-bottom:0;
     li {
@@ -216,19 +217,19 @@ main
       background-color: $blue;
       border: 2px solid $black;
       border-radius: 50%;
-      img {
-        width: 80px;
-      }
-      &:hover, &:focus {
-      height: 250px;
-      width: 250px;
-      border-radius: 50%;
-      border: 2px solid $black;
-      background-color: lighten($blue, 10%);
-      }
-      a {
-      display: block;
-      }
+        img {
+          width: 80px;
+        }
+        &:hover, &:focus {
+        height: 250px;
+        width: 250px;
+        border-radius: 50%;
+        border: 2px solid $black;
+        background-color: lighten($blue, 10%);
+        }
+        a {
+        display: block;
+        }
       }
       h2 {
       padding-top: 20%;
@@ -241,7 +242,6 @@ main
       .graph h2 {
       padding-top: 30%;
       }
-      
     }
     &.reportBlock {
     padding: 50px 0 50px 0;
@@ -328,10 +328,12 @@ data and information
     &.top {
     padding: 20px 20px 80px 20px;
     background-image:url(../img/oil_blur.jpg);
-    height: 550px;
     margin-top: 230px;
     color: $white;
     &.dataInfo{
+        height: 400px;
+        position: relative;
+        z-index: -1;
         h1 {
         font-size: 2.16em;
         line-height: 1em;
@@ -350,4 +352,59 @@ data and information
       color: $black;
       }
     }
+    
+}
+
+.dataSubHead {
+    vertical-align: middle;
+    text-align: center;
+    background-color: $blue;
+    .circle {
+    z-index: 50;
+    margin-top: 0px;
+    margin-bottom: 60px;
+    height: 250px;
+    width: 250px;
+    background-color: $blue;
+    border: 2px solid $black;
+    border-radius: 50%;
+      img {
+        width: 80px;
+      }
+      &:hover, &:focus {
+      height: 250px;
+      width: 250px;
+      border-radius: 50%;
+      border: 2px solid $black;
+      background-color: lighten($blue, 10%);
+      }
+      a {
+      display: block;
+      }
+    }
+    h2 {
+      padding-top: 20%;
+      font-size: $large;
+      color: $white;
+      font-weight:700;
+      padding-right: 15px;
+      padding-left: 15px;
+      }
+    .graph h2 {
+    padding-top: 30%;
+      }
+    .active {
+      height: 250px;
+      width: 250px;
+      border-radius: 50%;
+      border: 2px solid $black;
+      background-color: lighten($blue, 10%);
+      }
+}
+.move {
+  margin-top: -130px;
+}
+.mapBlock {
+  margin-top: 30px;
+  margin-bottom: 60px;
 }

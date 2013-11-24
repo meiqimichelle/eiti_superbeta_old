@@ -14,7 +14,7 @@ var cbpAnimatedHeader = (function() {
     var docElem = document.documentElement,
         header = document.querySelector( '.animate' ),
         didScroll = false,
-        changeHeaderOn = 50;
+        changeHeaderOn = 230;
  
     function init() {
         window.addEventListener( 'scroll', function( event ) {

@@ -206,7 +206,7 @@ main
     text-align: center;
       .line {
       border-bottom: 2px solid $black;
-      margin-top: 160px;
+      margin-top: 140px;
       }
       .circle {
       z-index: 50;
@@ -362,7 +362,7 @@ data and information
     .circle {
     z-index: 50;
     margin-top: 0px;
-    margin-bottom: 60px;
+    margin-bottom: 10px;
     height: 250px;
     width: 250px;
     background-color: $blue;
@@ -380,6 +380,21 @@ data and information
       }
       a {
       display: block;
+      }
+    }
+    ul {
+    width: 250px;
+      li a {
+      display: block;
+      padding: 7px;
+      margin: auto 15% auto 17%;
+      font-size: $med;
+      color: $white;
+      font-weight:700;
+      background-color: lighten($blue, 10%);
+      &:hover, &:focus {      
+      background-color: lighten($blue, 5%);
+      }
       }
     }
     h2 {
